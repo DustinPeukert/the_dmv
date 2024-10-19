@@ -7,7 +7,7 @@ describe Registrant do
   end
 
   describe '#initialize' do
-    it 'can initialize' do
+    it 'can initialize with different arguments' do
       expect(@registrant_1).to be_an_instance_of(Registrant)
       expect(@registrant_2).to be_an_instance_of(Registrant)
 
