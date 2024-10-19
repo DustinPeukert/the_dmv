@@ -40,11 +40,19 @@ class Facility
 
   def administer_written_test(registrant)
     if @services.include?('Written Test')
-      if registrant.will_pass_test?
+      if registrant.will_pass_written?
         registrant.pass_written_test
       else
         false
       end
+    else
+      false
+    end
+  end
+
+  def administer_road_test(registrant)
+    if @services.include?('Road Test')
+      if registrant.will_pass_road?
     else
       false
     end
