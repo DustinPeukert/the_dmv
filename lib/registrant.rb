@@ -22,6 +22,10 @@ class Registrant
     age >= 16 && permit?
   end
 
+  def will_pass_road?
+    @license_data[:written] == true
+  end
+
   def pass_written_test
     @license_data[:written] = true
   end
