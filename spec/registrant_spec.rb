@@ -36,7 +36,7 @@ describe Registrant do
 
       expect(@registrant_2.permit?).to be true
 
-      @registrant_2.earn_permit
+      @registrant_2.earn_permit #might take these out
 
       expect(@registrant_2.permit?).to be true
     end
@@ -118,6 +118,10 @@ describe Registrant do
   describe '#renew_license' do
     it 'renews the registrants license' do
       expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+
+      @registrant_1.renew_drivers_license
+
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>true})
 
       @registrant_1.renew_drivers_license
 
