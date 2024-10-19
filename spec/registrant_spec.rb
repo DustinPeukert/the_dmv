@@ -106,12 +106,12 @@ describe Registrant do
     it 'returns true if registrant has passed their road test' do
       @registrant_1.pass_road_test
       expect(@registrant_1.license_data).to eq({:written=>false, :license=>true, :renewed=>false})
-      expect(@registrant_1.can_renew_license).to be true
+      expect(@registrant_1.can_renew_license?).to be true
     end
 
     it 'returns false if registrant has not passed their road test' do
       expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
-      expect(@registrant_1.can_renew_license).to be false
+      expect(@registrant_1.can_renew_license?).to be false
     end
   end
 
