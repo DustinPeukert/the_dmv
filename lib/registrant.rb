@@ -18,7 +18,7 @@ class Registrant
     @permit = true
   end
 
-  def will_pass_test?
+  def will_pass_written?
     if age >= 16 && permit?
       true
     else
