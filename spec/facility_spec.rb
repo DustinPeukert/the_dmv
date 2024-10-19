@@ -60,15 +60,14 @@ RSpec.describe Facility do
     end
 
     it 'can register more than 1 vehicle' do
-      expect(@facility_1.services).to eq(['Vehicle Registration'])
-
       @facility_1.add_service('Vehicle Registration')
+      expect(@facility_1.services).to eq(['Vehicle Registration'])
 
       expect(@facility_1.register_vehicle(@cruz)).to eq([@cruz])
       expect(@facility_1.register_vehicle(@camaro)).to eq([@cruz, @camaro])
       expect(@facility_1.register_vehicle(@bolt)).to eq([@cruz, @camaro, @bolt])
 
-      expect(@facility_1.services).to eq([@cruz, @camaro, @bolt])
+      expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro, @bolt])
     end
   end
 end
