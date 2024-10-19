@@ -96,5 +96,14 @@ RSpec.describe Facility do
         expect(@facility_1.collected_fees).to eq(100)
       end
     end
+
+    it 'can accumulate fees' do
+      @facility_1.add_service('Vehicle Registration')
+      @facility_1.register_vehicle(@cruz)
+      @facility_1.register_vehicle(@bolt)
+      @facility_1.register_vehicle(@camaro)
+
+      expect(@facility_1.collected_fees).to eq(325)
+    end
   end
 end
