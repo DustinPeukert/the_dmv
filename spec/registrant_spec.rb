@@ -87,4 +87,18 @@ describe Registrant do
       end
     end
   end
+
+  describe '#pass_road_test' do
+    it 'will grant a license to the registrant' do
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+
+      @registrant_1.pass_road_test
+
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>true, :renewed=>false})
+
+      @registrant_1.pass_road_test
+
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>true, :renewed=>false})
+    end
+  end
 end
