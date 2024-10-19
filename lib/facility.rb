@@ -61,6 +61,18 @@ class Facility
       false
     end
   end
+
+  def renew_drivers_license(registrant)
+    if @services.include?('Renew License')
+      if registrant.can_renew_license?
+        registrant.renew_drivers_license
+      else
+        false
+      end
+    else
+      false
+    end
+  end
 end
 
 # look at monday/tuesaday lessons
