@@ -18,6 +18,14 @@ class Registrant
     @permit = true
   end
 
+  def will_pass_test?
+    if age >= 16 && permit?
+      true
+    else
+      false
+    end
+  end
+
   def pass_written_test
     @license_data[:written] = true
   end
