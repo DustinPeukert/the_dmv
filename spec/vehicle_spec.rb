@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'date'
 
 RSpec.describe Vehicle do
   before(:each) do
@@ -15,7 +16,8 @@ RSpec.describe Vehicle do
       expect(@cruz.make).to eq('Chevrolet')
       expect(@cruz.model).to eq('Cruz')
       expect(@cruz.engine).to eq(:ice)
-      expect(@cruz.registration_date).to eq(nil)
+      expect(@cruz.registration_date).to be nil
+      expect(@cruz.plate_type).to be nil
     end
   end
 
@@ -32,6 +34,55 @@ RSpec.describe Vehicle do
       expect(@cruz.electric_vehicle?).to eq(false)
       expect(@bolt.electric_vehicle?).to eq(true)
       expect(@camaro.electric_vehicle?).to eq(false)
+    end
+  end
+
+  describe '#set_registration_date' do
+    it 'sets the date of registration upon method call' do
+      expect(@cruz.registration_date).to be nil
+
+      @cruz.set_registration_date
+
+      expect(@cruz.registration_date).to be_an_instance_of(Date)
+      expect(@cruz.registration_date).to eq(Date.today)
+    end
+  end
+
+  describe '#set_plate_type' do
+    context 'vehicle is not antique or electric(EV)' do
+      it 'sets the plate type to :regular' do
+        expect(@cruz.antique?).to be false
+        expect(@cruz.electric_vehicle?).to be false
+        expect(@cruz.plate_type).to be nil
+
+        @cruz.set_plate_type
+
+        expect(@cruz.plate_type).to eq(:regular)
+      end
+    end
+
+    context 'vehicle is electric(EV)' do
+      it 'sets the plate_type to :ev' do
+        expect(@bolt.antique?).to be false # don't need this but consistency
+        expect(@bolt.electric_vehicle?).to be true
+        expect(@bolt.plate_type).to be nil
+
+        @bolt.set_plate_type
+
+        expect(@bolt.plate_type).to eq(:ev)
+      end
+    end
+
+    context 'vehicle is an antique' do
+      it 'sets the plate_type to :antique' do
+        expect(@camaro.antique?).to be true
+        expect(@camaro.electric_vehicle?).to be false
+        expect(@camaro.plate_type).to be nil
+        
+        @camaro.set_plate_type
+
+        expect(@camaro.plate_type).to eq(:antique)
+      end
     end
   end
 end
