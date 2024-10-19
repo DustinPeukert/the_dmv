@@ -75,10 +75,10 @@ RSpec.describe Vehicle do
 
     context 'vehicle is an antique' do
       it 'sets the plate_type to :antique' do
-        expect(@camaro.antique).to be true
+        expect(@camaro.antique?).to be true
         expect(@camaro.electric_vehicle?).to be false
         expect(@camaro.plate_type).to be nil
-
+        
         @camaro.set_plate_type
 
         expect(@camaro.plate_type).to eq(:antique)
