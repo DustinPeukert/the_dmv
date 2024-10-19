@@ -37,4 +37,20 @@ class Facility
       'We do not provide this service: Vehicle Registration'
     end
   end
+
+  def administer_written_test(registrant)
+    if @services.include?('Written Test')
+      if registrant.will_pass_test?
+        registrant.pass_written_test
+      else
+        false
+      end
+    else
+      false
+    end
+  end
 end
+
+# look at monday/tuesaday lessons
+# switch methods
+# exists, data_types, ev type, no_data_empty, 
