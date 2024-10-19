@@ -177,6 +177,7 @@ RSpec.describe Facility do
     context 'registrant has not passed their written test' do
       it 'cannot administer test' do
         @facility_1.add_service('Road Test')
+        expect(@facility_1.services).to eq(['Road Test'])
 
         expect(@registrant_1.license_data[:written]).to be false
         expect(@facility_1.administer_road_test(@registrant_1)).to be false
@@ -187,11 +188,13 @@ RSpec.describe Facility do
     context 'registrant passed written test and service is provided' do
       it 'can administer test' do
         @facility_1.add_service('Road Test')
+        @facility_1.add_service('Written Test')
+        expect(@facility_1.services).to eq(['Road Test', 'Written Test'])
         @facility_1.administer_written_test(@registrant_1)
 
-        expect(@registrant_1.license_data[:written]).to be true
-        expect(@facility_1.administer_written_test(@registrant_1)).to be true
-        expect(@registrant_1.license_data[:license]).to be true
+        expect(@registrant_1.license_data).to eq({written: true, license: false, renewed: false})
+        expect(@facility_1.administer_road_test(@registrant_1)).to be true
+        expect(@registrant_1.license_data).to eq({written: true, license: true, renewed: false})
       end
     end
   end
