@@ -69,5 +69,32 @@ RSpec.describe Facility do
 
       expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro, @bolt])
     end
+
+    context 'vehicle is antique' do
+      it 'collects $25 upon registration' do
+        @facility_1.add_service('Vehicle Registration')
+        @facility_1.register_vehicle(@camaro)
+
+        expect(@facility_1.collected_fees).to eq(25)
+      end
+    end
+
+    context 'vehicle is electric(EV)' do
+      it 'collects $200 upon registration' do
+        @facility_1.add_service('Vehicle Registration')
+        @facility_1.register_vehicle(@bolt)
+
+        expect(@facility_1.collected_fees).to eq(200)
+      end
+    end
+
+    context 'vehicle is neither antique nor electric(EV)' do
+      it 'collects $100 upon registration' do
+        @facility_1.add_service('Vehicle Registration')
+        @facility_1.register_vehicle(@cruz)
+
+        expect(@facility_1.collected_fees).to eq(100)
+      end
+    end
   end
 end
