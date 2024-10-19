@@ -26,6 +26,10 @@ class Registrant
     @license_data[:written] == true
   end
 
+  def can_renew_license?
+    @license_data[:license] == true
+  end
+
   def pass_written_test
     @license_data[:written] = true
   end
