@@ -52,7 +52,7 @@ describe Registrant do
     end
   end
 
-  describe '#will_pass_test?' do
+  describe '#will_pass_written?' do
     context 'registrant has their permit and is 16+' does
       it 'will pass the test' do
         expect(@registrant_1.permit?).to be true
@@ -66,6 +66,24 @@ describe Registrant do
         expect(@registrant_2.permit?).to be false
         expect(@registrant_2.age >= 16).to be false
         expect(@registrant_2.will_pass_test).to be false
+      end
+    end
+  end
+
+  describe '#will_pass_road?' do
+    context 'registrant has passed their written test' do
+      it 'will pass its road test' do
+        @registrant.pass_written_test
+
+        expect(@registrant_1.license_data[:written]).to be true
+        expect(@registrant_1.will_pass_road?).to be true
+      end
+    end
+
+    context 'registrant has not passed their written test' do
+      it 'will not pass its road test' do
+        expect(@registrant_1.license_data[:written]).to be false
+        expect(@registrant_1.will_pass_road?).to be false
       end
     end
   end
