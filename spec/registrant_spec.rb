@@ -35,6 +35,10 @@ describe Registrant do
       @registrant_2.earn_permit
 
       expect(@registrant_2.permit?).to be true
+
+      @registrant_2.earn_permit
+
+      expect(@registrant_2.permit?).to be true
     end
   end
 
@@ -45,6 +49,24 @@ describe Registrant do
       @registrant_1.pass_written_test
 
       expect(@registrant_1.license_data).to eq({:written=>true, :license=>false, :renewed=>false})
+    end
+  end
+
+  describe '#will_pass_test?' do
+    context 'registrant has their permit and is 16+' does
+      it 'will pass the test' do
+        expect(@registrant_1.permit?).to be true
+        expect(@registrant_1.age >= 16).to be true
+        expect(@registrant_1.will_pass_test?).to be true
+      end
+    end
+
+    context 'registrant does not have a permit or is not 16+' do
+      it 'will not pass the test' do
+        expect(@registrant_2.permit?).to be false
+        expect(@registrant_2.age >= 16).to be false
+        expect(@registrant_2.will_pass_test).to be false
+      end
     end
   end
 end
