@@ -43,8 +43,8 @@ RSpec.describe Vehicle do
 
       @cruz.set_registration_date
 
-      expect(@registration_date).to be_an_instance_of(Date)
-      expect(@registration_date).to eq(Date.today)
+      expect(@cruz.registration_date).to be_an_instance_of(Date)
+      expect(@cruz.registration_date).to eq(Date.today)
     end
   end
 
