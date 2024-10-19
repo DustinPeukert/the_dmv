@@ -47,4 +47,42 @@ RSpec.describe Vehicle do
       expect(@registration_date).to eq(Date.today)
     end
   end
+
+  describe '#set_plate_type' do
+    context 'vehicle is not antique or electric(EV)' do
+      it 'sets the plate type to :regular' do
+        expect(@cruz.antique?).to be false
+        expect(@cruz.electric_vehicle?).to be false
+        expect(@cruz.plate_type).to be nil
+
+        @cruz.set_plate_type
+
+        expect(@cruz.plate_type).to eq(:regular)
+      end
+    end
+
+    context 'vehicle is electric(EV)' do
+      it 'sets the plate_type to :ev' do
+        expect(@bolt.antique?).to be false # don't need this but consistency
+        expect(@bolt.electric_vehicle?).to be true
+        expect(@bolt.plate_type).to be nil
+
+        @bolt.set_plate_type
+
+        expect(@bolt.plate_type).to eq(:ev)
+      end
+    end
+
+    context 'vehicle is an antique' do
+      it 'sets the plate_type to :antique' do
+        expect(@camaro.antique).to be true
+        expect(@camaro.electric_vehicle?).to be false
+        expect(@camaro.plate_type).to be nil
+
+        @camaro.set_plate_type
+
+        expect(@camaro.plate_type).to eq(:antique)
+      end
+    end
+  end
 end
