@@ -19,11 +19,7 @@ class Registrant
   end
 
   def will_pass_written?
-    if age >= 16 && permit?
-      true
-    else
-      false
-    end
+    age >= 16 && permit?
   end
 
   def pass_written_test
