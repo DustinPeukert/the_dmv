@@ -164,4 +164,35 @@ RSpec.describe Facility do
       end
     end
   end
+
+  describe '#administer_road_test' do
+    context 'facility does not provide service' do
+      it 'cannot administer test' do
+        expect(@facility_1.services).to eq([])
+        expect(@facility_1.administer_road_test).to be false
+        expect(@registrant_1.license_data[:license]).to be false
+      end
+    end
+
+    context 'registrant has not passed their written test' do
+      it 'cannot administer test' do
+        @facility_1.add_service('Road Test')
+        
+        expect(@registrant_1.license_data[:written]).to be false
+        expect(@facility_1.administer_road_test).to be false
+        expect(@registrant_1.license_data[:license]).to be false
+      end
+    end
+
+    context 'registrant passed written test and service is provided' do
+      it 'can administer test' do
+        @facility_1.add_service('Road Test')
+        @facility_1.administer_written_test(@registrant_1)
+
+        expect(@registrant_1.license_data[:written]).to be true
+        expect(@facility_1.administer_written_test(@registrant_1)).to be true
+        expect(@registrant_1.license_data[:license]).to be true
+      end
+    end
+  end
 end
