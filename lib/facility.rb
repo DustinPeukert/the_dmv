@@ -53,6 +53,10 @@ class Facility
   def administer_road_test(registrant)
     if @services.include?('Road Test')
       if registrant.will_pass_road?
+        registrant.pass_road_test
+      else
+        false
+      end
     else
       false
     end
