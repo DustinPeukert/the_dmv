@@ -7,8 +7,6 @@ RSpec.describe Facility do
     @cruz = Vehicle.new({vin: '123456789abcdefgh', year: 2012, make: 'Chevrolet', model: 'Cruz', engine: :ice})
     @bolt = Vehicle.new({vin: '987654321abcdefgh', year: 2019, make: 'Chevrolet', model: 'Bolt', engine: :ev})
     @camaro = Vehicle.new({vin: '1a2b3c4d5e6f', year: 1969, make: 'Chevrolet', model: 'Camaro', engine: :ice})
-
-    @facility_1.add_service('Vehicle Registration')
   end
 
   describe '#initialize' do
@@ -39,6 +37,7 @@ RSpec.describe Facility do
       expect(@cruz.plate_type).to be nil
       expect(@facility_1.registered_vehicles).to eq([])
       
+      @facility_1.add_service('Vehicle Registration')
       expect(@facility_1.register_vehicle(@cruz)).to eq([@cruz])
 
       expect(@cruz.registration_date).to be_a(Date) #Date.today
@@ -52,6 +51,7 @@ RSpec.describe Facility do
       expect(@facility_1.services).to eq(['Vehicle Registration'])
       expect(@facility_2.services).to eq([])
 
+      @facility_1.add_service('Vehicle Registration')
       expect(@facility_1.register(@cruz)).to eq([@cruz])
       expect(@facility_2.register(@camaro)).to eq('We do not provide this service: Vehicle Registration')
 
@@ -61,6 +61,8 @@ RSpec.describe Facility do
 
     it 'can register more than 1 vehicle' do
       expect(@facility_1.services).to eq(['Vehicle Registration'])
+
+      @facility_1.add_service('Vehicle Registration')
 
       expect(@facility_1.register(@cruz)).to eq([@cruz])
       expect(@facility_1.register(@camaro)).to eq([@cruz, @camaro])
