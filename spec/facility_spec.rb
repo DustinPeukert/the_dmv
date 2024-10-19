@@ -198,4 +198,44 @@ RSpec.describe Facility do
       end
     end
   end
+
+  describe '#renew_drivers_license' do
+    context 'facility does not have this service' do
+      it 'cannot renew a registrants license' do
+        @facility_1.add_service('Written Test')
+        @facility_1.add_service('Road Test')
+        expect(@facility_1.services).to eq(['Written Test', 'Road Test'])
+
+        @facility_1.administer_written_test(@registrant_1)
+        @facility_1.administer_road_test(@registrant_1)
+
+        expect(@facility_1.renew_drivers_license(@registrant_1)).to be false
+        expect(@registrant_1.license_data).to eq({written: true, license: true, renewed: false})
+      end
+    end
+
+    context 'facility has the service' do
+      it 'can renew the registrants license' do
+        @facility_1.add_service('Written Test')
+        @facility_1.add_service('Road Test')
+        @facility_1.add_service('Renew License')
+        expect(@facility_1.services).to eq(['Written Test', 'Road Test', 'Renew License'])
+
+        @facility_1.administer_written_test(@registrant_1)
+        @facility_1.administer_road_test(@registrant_1)
+
+        expect(@facility_1.renew_drivers_license(@registrant_1)).to be true
+        expect(@registrant_1.license_data).to eq({written: true, license: true, renewed: true})
+      end
+
+      it 'requires a registrant to have a license' do
+        @facility_1.add_service('Renew License')
+        expect(@facility_1.services).to eq(['Renew License'])
+        expect(@registrant_1.license_data).to eq({written: false, license: false, renewed: false})
+
+        expect(@facility_1.renew_drivers_license(@registrant_1)).to be false
+        expect(@registrant_1.license_data).to eq({written: false, license: false, renewed: false})
+      end
+    end
+  end
 end
