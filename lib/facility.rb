@@ -18,4 +18,14 @@ class Facility
   def add_service(service)
     @services << service
   end
+
+  def register_vehicle(vehicle)
+    if @services.include?('Vehicle Registration')
+      vehicle.set_registration_date
+      vehicle.set_plate_type
+      @registered_vehicles << vehicle
+    else
+      'We do not provide this service: Vehicle Registration'
+    end
+  end
 end
