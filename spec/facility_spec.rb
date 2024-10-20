@@ -70,6 +70,10 @@ RSpec.describe Facility do
       expect(@facility_1.register_vehicle(@camaro)).to eq([@cruz, @camaro])
       expect(@facility_1.register_vehicle(@bolt)).to eq([@cruz, @camaro, @bolt])
 
+      expect(@cruz.plate_type).to eq(:regular)
+      expect(@camaro.plate_type).to eq(:antique)
+      expect(@bolt.plate_type).to eq(:ev)
+
       expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro, @bolt])
     end
 
@@ -78,6 +82,7 @@ RSpec.describe Facility do
         @facility_1.add_service('Vehicle Registration')
         @facility_1.register_vehicle(@camaro)
 
+        expect(@camaro.plate_type).to eq(:antique)
         expect(@facility_1.collected_fees).to eq(25)
       end
     end
@@ -87,6 +92,7 @@ RSpec.describe Facility do
         @facility_1.add_service('Vehicle Registration')
         @facility_1.register_vehicle(@bolt)
 
+        expect(@bolt.plate_type).to eq(:ev)
         expect(@facility_1.collected_fees).to eq(200)
       end
     end
@@ -96,6 +102,7 @@ RSpec.describe Facility do
         @facility_1.add_service('Vehicle Registration')
         @facility_1.register_vehicle(@cruz)
 
+        expect(@cruz.plate_type).to eq(:regular)
         expect(@facility_1.collected_fees).to eq(100)
       end
     end

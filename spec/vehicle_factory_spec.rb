@@ -24,6 +24,12 @@ describe VehicleFactory do
       created_vehicles.each do |vehicle|
         expect(vehicle).to be_an_instance_of(Vehicle)
       end
+
+      expect(created_vehicles[0].vin).to eq("1N4BZ0CP3G")
+      expect(created_vehicles[0].year).to eq(2016)
+      expect(created_vehicles[0].make).to eq("Nissan")
+      expect(created_vehicles[0].model).to eq("Leaf")
+      expect(created_vehicles[0].engine).to eq(:ev)
     end
   end
 end
