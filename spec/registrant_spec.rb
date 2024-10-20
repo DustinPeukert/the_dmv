@@ -35,6 +35,97 @@ describe Registrant do
       @registrant_2.earn_permit
 
       expect(@registrant_2.permit?).to be true
+
+      @registrant_2.earn_permit #might take these out
+
+      expect(@registrant_2.permit?).to be true
+    end
+  end
+
+  describe '#pass_written_test' do
+    it 'changes license data to reflect passing of test' do
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+
+      @registrant_1.pass_written_test
+
+      expect(@registrant_1.license_data).to eq({:written=>true, :license=>false, :renewed=>false})
+    end
+  end
+
+  describe '#will_pass_written?' do
+    context 'registrant has their permit and is 16+' do
+      it 'will pass the test' do
+        expect(@registrant_1.permit?).to be true
+        expect(@registrant_1.age >= 16).to be true
+        expect(@registrant_1.will_pass_written?).to be true
+      end
+    end
+
+    context 'registrant does not have a permit or is not 16+' do
+      it 'will not pass the test' do
+        expect(@registrant_2.permit?).to be false
+        expect(@registrant_2.age >= 16).to be false
+        expect(@registrant_2.will_pass_written?).to be false
+      end
+    end
+  end
+
+  describe '#will_pass_road?' do
+    context 'registrant has passed their written test' do
+      it 'will pass its road test' do
+        @registrant_1.pass_written_test
+
+        expect(@registrant_1.license_data[:written]).to be true
+        expect(@registrant_1.will_pass_road?).to be true
+      end
+    end
+
+    context 'registrant has not passed their written test' do
+      it 'will not pass its road test' do
+        expect(@registrant_1.license_data[:written]).to be false
+        expect(@registrant_1.will_pass_road?).to be false
+      end
+    end
+  end
+
+  describe '#pass_road_test' do
+    it 'will grant a license to the registrant' do
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+
+      @registrant_1.pass_road_test
+
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>true, :renewed=>false})
+
+      @registrant_1.pass_road_test
+
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>true, :renewed=>false})
+    end
+  end
+
+  describe '#can_renew_license?' do
+    it 'returns true if registrant has passed their road test' do
+      @registrant_1.pass_road_test
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>true, :renewed=>false})
+      expect(@registrant_1.can_renew_license?).to be true
+    end
+
+    it 'returns false if registrant has not passed their road test' do
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+      expect(@registrant_1.can_renew_license?).to be false
+    end
+  end
+
+  describe '#renew_license' do
+    it 'renews the registrants license' do
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+
+      @registrant_1.renew_drivers_license
+
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>true})
+
+      @registrant_1.renew_drivers_license
+
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>true})
     end
   end
 end

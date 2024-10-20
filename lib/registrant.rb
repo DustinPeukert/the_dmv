@@ -17,4 +17,28 @@ class Registrant
   def earn_permit
     @permit = true
   end
+
+  def will_pass_written?
+    age >= 16 && permit?
+  end
+
+  def will_pass_road?
+    @license_data[:written] == true
+  end
+
+  def can_renew_license?
+    @license_data[:license] == true
+  end
+
+  def pass_written_test
+    @license_data[:written] = true
+  end
+
+  def pass_road_test
+    @license_data[:license] = true
+  end
+
+  def renew_drivers_license
+    @license_data[:renewed] = true
+  end
 end
