@@ -16,6 +16,9 @@ describe VehicleFactory do
       wa_ev_registrations = DmvDataService.new.wa_ev_registrations
       created_vehicles = @vehicle_factory.create_vehicles(wa_ev_registrations)
       
+      expect(wa_ev_registrations.count).to eq(1000)
+      expect(created_vehicles.count).to eq(1000)
+
       expect(created_vehicles).to be_an(Array)
 
       created_vehicles.each do |vehicle|
