@@ -3,17 +3,37 @@ class FacilityFactory
     created_facilities = []
 
     facility_data.each do |facility|
-      address_main = facility[:"address_li"]
-      address_sub = facility[:"address__1"]
+      address_main = facility[:"address_li"] || # using || will return the first non-nil value
+                     facility[:"street_address_line_1"] || #its called short circuit evaluation
+                     facility[:"address1"]
+
+      address_sub = facility[:"address__1"] ||
+                    facility[:"street_address_line_2"]
+            
       city = facility[:"city"]
+
       state = facility[:"state"]
-      zip = facility[:"zip"]
 
-      full_address = [address_main, address_sub, city, state, zip].join(" ")
+      zip = facility[:"zip"] ||
+            facility[:"zip_code"] ||
+            facility[:"zipcode"]
 
-      new_facility = Facility.new({name: facility[:"dmv_office"],
+      name = facility[:"dmv_office"] ||
+             facility[:"office_name"] ||
+             facility[:"name"]
+      
+      phone = facility[:"phone"] ||
+              facility[:"public_phone_number"]
+
+      if address_sub != nil
+        full_address = [address_main, address_sub, city, state, zip].join(" ")
+      else
+        full_address = [address_main, city, state, zip].join(" ")
+      end
+
+      new_facility = Facility.new({name: name,
                                    address: full_address,
-                                   phone: facility[:"phone"]
+                                   phone: phone
                                   })
       created_facilities << new_facility
     end
