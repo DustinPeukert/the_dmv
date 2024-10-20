@@ -10,4 +10,17 @@ describe VehicleFactory do
       expect(@vehicle_factory).to be_an_instance_of(VehicleFactory)
     end
   end
+
+  describe '#create_vehicles' do
+    it 'creates vehicles using stored API data' do
+      wa_ev_registrations = DmvDataService.new.wa_ev_registrations
+      created_vehicles = @vehicle_factory.create_vehicles(wa_ev_registrations)
+      
+      expect(created_vehicles).to be_an(Array)
+
+      created_vehicles.each do |vehicle|
+        expect(vehicle).to be_an_instance_of(Vehicle)
+      end
+    end
+  end
 end
