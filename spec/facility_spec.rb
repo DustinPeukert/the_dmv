@@ -70,6 +70,10 @@ RSpec.describe Facility do
       expect(@facility_1.register_vehicle(@camaro)).to eq([@cruz, @camaro])
       expect(@facility_1.register_vehicle(@bolt)).to eq([@cruz, @camaro, @bolt])
 
+      expect(@cruz.plate_type).to eq(:regular)
+      expect(@camaro.plate_type).to eq(:antique)
+      expect(@bolt.plate_type).to eq(:ev)
+
       expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro, @bolt])
     end
 
